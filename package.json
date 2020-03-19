@@ -1,0 +1,40 @@
+{
+  "name": "ghost-cloudflare-cache-invalidation",
+  "version": "0.0.1",
+  "description": "AWS Lambda function to receive Ghost webhooks and invalidate Cloudflare cache",
+  "keywords": [
+    "ghost",
+    "cloudflare",
+    "cache",
+    "aws",
+    "lambda"
+  ],
+  "homepage": "https://github.com/cmorbitzer/ghost-cloudflare-cache-invalidation",
+  "bugs": {
+    "url": "https://github.com/cmorbitzer/ghost-cloudflare-cache-invalidation/issues",
+    "email": "chris.morbitzer@gmail.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Chris Morbitzer",
+    "email": "chris.morbitzer@gmail.com",
+    "url": "https://www.chrismorbitzer.com"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cmorbitzer/ghost-cloudflare-cache-invalidation.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.46",
+    "@types/node": "^13.9.2",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
+  }
+}
