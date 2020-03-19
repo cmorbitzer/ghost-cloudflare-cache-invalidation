@@ -20,25 +20,33 @@ interface CloudflarePurgeFilesResponse {
   success: boolean;
 }
 
-export const handler: Handler<APIGatewayEvent> = async (event) => {
-  const cfId = process.env.CLOUDFLARE_IDENTIFIER;
-  const cfApiToken = process.env.CLOUDFLARE_API_TOKEN;
-  const ghostUrl = process.env.GHOST_URL;
+const cfId = process.env.CLOUDFLARE_IDENTIFIER;
+const cfApiToken = process.env.CLOUDFLARE_API_TOKEN;
+const ghostUrl = process.env.GHOST_URL;
 
-  const payload: GhostWebhookPayload = JSON.parse(event.body);
+function getFilesFromPayload(payload: GhostWebhookPayload) {
   const object = payload.page || payload.post;
 
   if (!object) {
-    return;
+    return [];
   }
 
-  const files = [ghostUrl];
+  const files = [];
   for (const state of ['current', 'previous']) {
     if (object[state].url) {
       files.push(object[state].url);
     } else if (object[state].slug) {
       files.push(ghostUrl + object[state].slug);
     }
+  }
+}
+
+export const handler: Handler<APIGatewayEvent> = async (event) => {
+  const files = [ghostUrl];
+
+  if (event.body) {
+    const payload: GhostWebhookPayload = JSON.parse(event.body);
+    files.concat(getFilesFromPayload(payload));
   }
 
   const response = await axios.post<CloudflarePurgeFilesResponse>(
